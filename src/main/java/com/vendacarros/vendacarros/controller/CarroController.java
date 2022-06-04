@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vendacarros.vendacarros.model.Carro;
+import com.vendacarros.vendacarros.model.Modelo;
 import com.vendacarros.vendacarros.repository.CarroRepository;
+import com.vendacarros.vendacarros.repository.ModeloRepository;
 
 @RestController
 @RequestMapping("/carro")
@@ -25,6 +27,9 @@ public class CarroController {
 	
 	@Autowired
 	private CarroRepository repository;
+	
+	@Autowired
+	private ModeloRepository modeloRepository;
 	
 	@GetMapping
 	public ResponseEntity<List<Carro>>getAll()
@@ -46,8 +51,9 @@ public class CarroController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Carro> post (@RequestBody Carro carro)
-	{
+	public ResponseEntity<Carro> post (@RequestBody Carro carro){
+		Modelo modelo = modeloRepository.getById(carro.getModelo().getId());
+		carro.setModelo(modelo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(carro));
 	}
 	

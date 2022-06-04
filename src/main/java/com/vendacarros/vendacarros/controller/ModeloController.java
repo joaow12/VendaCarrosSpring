@@ -47,7 +47,8 @@ public class ModeloController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Modelo> post (@RequestBody Modelo modelo){
+	public ResponseEntity<Modelo> post (@RequestBody Modelo modelo)
+	{
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(modelo));
 	}
 	
